@@ -13,6 +13,11 @@ android {
             consumerProguardFile('proguard-sdk.pro')
         }
     }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
     namespace 'androidmads.library.qrgenearator'
 }
 
@@ -24,9 +29,37 @@ dependencies {
 publishing {
     publications {
         release(MavenPublication) {
-//            afterEvaluate {
-//                from components.release
-//            }
+            afterEvaluate {
+                from components.release
+            }
+
+            groupId = 'com.github.nikvladimir.QRGenerator'
+            artifactId = project.name
+            version = '1.0.4'
+
+            pom {
+                name = 'QRGenerator'
+                description = 'QRGenerator'
+                url = 'https://github.com/nikvladimir/QRGenerator'
+
+                licenses {
+                    license {
+                        name = 'The MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'nikvladimir'
+                        name = 'Vladimir'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:github.com/nikvladimir/QRGenerator.git'
+                    developerConnection = 'scm:git:ssh://github.com/nikvladimir/QRGenerator.git'
+                    url = 'https://github.com/nikvladimir/QRGenerator'
+                }
+            }
         }
     }
 }
